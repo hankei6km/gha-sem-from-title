@@ -1,0 +1,106 @@
+name: "test"
+on:
+  pull_request:
+  push:
+    branches:
+      - "main"
+    tags:
+      - "!v*"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # test type=test
+      - name: type=test
+        id: type-test
+        uses: ./
+        with:
+          title: "test: subject-text"
+
+      - name: check type=test
+        id: check-type-test
+        run: |
+          test "${TYPE}" = "test"
+          test "${SCOPE}" = ""
+          test "${IS_BREAKING_CHANGE}" = "false"
+        env:
+          TYPE: ${{ steps.type-test.outputs.type }}
+          SCOPE: ${{ steps.type-test.outputs.scope }}
+          IS_BREAKING_CHANGE: ${{ steps.type-test.outputs.is_breaking_change }}
+
+      # test type=test scope=client
+      - name: type=test scope=client
+        id: type-test-scope-client
+        uses: ./
+        with:
+          title: "test(client): subject-text"
+
+      - name: check type=test scope=client
+        id: check-type-test-scope-client
+        run: |
+          test "${TYPE}" = "test"
+          test "${SCOPE}" = "client"
+          test "${IS_BREAKING_CHANGE}" = "false"
+        env:
+          TYPE: ${{ steps.type-test-scope-client.outputs.type }}
+          SCOPE: ${{ steps.type-test-scope-client.outputs.scope }}
+          IS_BREAKING_CHANGE: ${{ steps.type-test-scope-client.outputs.is_breaking_change }}
+
+      # test type=test breaking change
+      - name: type=test breaking change
+        id: type-test-breaking-change
+        uses: ./
+        with:
+          title: "test!: subject-text"
+
+      - name: check type=test breaking change
+        id: check-type-test-breaking-change
+        run: |
+          test "${TYPE}" = "test"
+          test "${SCOPE}" = ""
+          test "${IS_BREAKING_CHANGE}" = "true"
+        env:
+          TYPE: ${{ steps.type-test-breaking-change.outputs.type }}
+          SCOPE: ${{ steps.type-test-breaking-change.outputs.scope }}
+          IS_BREAKING_CHANGE: ${{ steps.type-test-breaking-change.outputs.is_breaking_change }}
+
+      # test type=test scope=client scope=client
+      - name: type=test scope=client breaking change
+        id: type-test-scope-client-breaking-change
+        uses: ./
+        with:
+          title: "test(client)!: subject-text"
+
+      - name: check type=test scope=client breaking change
+        id: check-type-test-scope-client-breaking-change
+        run: |
+          test "${TYPE}" = "test"
+          test "${SCOPE}" = "client"
+          test "${IS_BREAKING_CHANGE}" = "true"
+        env:
+          TYPE: ${{ steps.type-test-scope-client-breaking-change.outputs.type }}
+          SCOPE: ${{ steps.type-test-scope-client-breaking-change.outputs.scope }}
+          IS_BREAKING_CHANGE: ${{ steps.type-test-scope-client-breaking-change.outputs.is_breaking_change }}
+
+      # test missing prefix
+      # Output an notice message and complete the process.
+      - name: missing prefix
+        id: missing-prefix
+        uses: ./
+        with:
+          title: "subject-text"
+
+      - name: check missing prefix
+        id: check-missing-prefix
+        run: |
+          test "${TYPE}" = ""
+          test "${SCOPE}" = ""
+          test "${IS_BREAKING_CHANGE}" = "false"
+          # It is unclear how to validate the notice message(annotaions).
+        env:
+          TYPE: ${{ steps.missing-prefix.outputs.type }}
+          SCOPE: ${{ steps.missing-prefix.outputs.scope }}
+          IS_BREAKING_CHANGE: ${{ steps.missing-prefix.outputs.is_breaking_change }}
