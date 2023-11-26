@@ -4,28 +4,6 @@ GitHub Action to extract semantic information from the title
 
 <!-- INSERT -->
 
-## Inputs
-
-| parameter | description | required | default |
-| --- | --- | --- | --- |
-| title | Title text | `true` |  |
-
-
-## Outputs
-
-| parameter | description |
-| --- | --- |
-| type | Type |
-| scope | Scope |
-| is_breaking_change | Is BREAKING CHANGE |
-
-
-## Runs
-
-This action is a `composite` action.
-
-
-
 ## Example usage
 
 ```yaml
