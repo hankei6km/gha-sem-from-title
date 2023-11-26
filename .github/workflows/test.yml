@@ -104,3 +104,20 @@ jobs:
           TYPE: ${{ steps.missing-prefix.outputs.type }}
           SCOPE: ${{ steps.missing-prefix.outputs.scope }}
           IS_BREAKING_CHANGE: ${{ steps.missing-prefix.outputs.is_breaking_change }}
+
+  readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js latest
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+
+      - name: Build README
+        run: ./scripts/gen-readme.sh
+
+      - name: Diff built files
+        run: |
+          git diff --exit-code --quiet README.md
