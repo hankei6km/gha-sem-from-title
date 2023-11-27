@@ -12,3 +12,8 @@ VERSION=$(npm_config_yes=true npx semver -i "${1}" --preid "${2}" "$LATEST")
 
 git commit --allow-empty -m "${VERSION}"
 git tag "v${VERSION}" -am "${VERSION}"
+
+echo "Operations for release:"
+echo "- git push --follow-tags origin"
+echo "- Create a release in any desired way"
+echo "- Execute scripts/semver-tags.sh"
