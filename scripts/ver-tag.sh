@@ -11,4 +11,4 @@ LATEST="$(npm_config_yes=true npx semver $(git tag | grep -e '^v.*') | tail -n 1
 VERSION=$(npm_config_yes=true npx semver -i "${1}" --preid "${2}" "$LATEST")
 
 git commit --allow-empty -m "${VERSION}"
-git tag "v${VERSION}"
+git tag "v${VERSION}" -am "${VERSION}"
