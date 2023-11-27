@@ -11,5 +11,5 @@ git tag -f "v${MAJOR}" -am "${MAJOR}"
 git tag -f "v${MINOR}" -am "${MINOR}"
 
 echo "To update semantically versioned tags, execute the following:"
-echo "git push -f v${MAJOR}"
-echo "git push -f v${MINOR}"
+echo "git push -f origin v${MAJOR}"
+echo "git push -f origin v${MINOR}"
