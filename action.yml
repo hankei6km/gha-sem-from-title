@@ -56,3 +56,7 @@ runs:
       env:
         TITLE: ${{ inputs.title }}
       shell: bash
+
+branding:
+  icon: "type"
+  color: "blue"
