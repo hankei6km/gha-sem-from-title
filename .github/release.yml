@@ -2,13 +2,13 @@ changelog:
   categories:
     - title: Breaking change
       labels:
-        - sem-pr: breaking change
+        - "sem-pr: breaking change"
     - title: Features
       labels:
-        - sem-pr: feat
+        - "sem-pr: feat"
     - title: Bug Fixes
       labels:
-        - sem-pr: fix
+        - "sem-pr: fix"
     - title: Other Changes
       labels:
         - "*"
